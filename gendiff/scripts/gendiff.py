@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import argparse
 
 
@@ -10,7 +11,7 @@ args = parser.parse_args()
 
 
 def main():
-    print(args)
+    args
 
 
 if __name__ == '__main__':

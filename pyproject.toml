@@ -5,14 +5,14 @@ description = "second project"
 authors = ["chachimin <Chachimin.DV@vibors.ru>"]
 readme = "README.md"
 packages = [
-  { include = "project" },
+  { include = "gendiff"},
 ]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 
 [tool.poetry.scripts]
-gendiff = "project.scripts.gendiff:main"
+gendiff = "gendiff.scripts.gendiff:main"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"

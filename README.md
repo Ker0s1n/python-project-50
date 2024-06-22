@@ -1,4 +1,4 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Ker0s1n/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Ker0s1n/python-project-50/actions)
 ### My tests and linter status:
-[![hexlet-check](https://github.com/Ker0s1n/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Ker0s1n/python-project-50/actions/workflows/hexlet-check.yml)
+[![check tests and linter](https://github.com/Ker0s1n/python-project-50/actions/workflows/tests-check.yml/badge.svg)](https://github.com/Ker0s1n/python-project-50/actions/workflows/tests-check.yml)

@@ -9,7 +9,7 @@ def test_correct_merge():
 
 
 def test_incorrect_merge():
-    assert not generate_diff(
+    assert generate_diff(
         'tests/fixtures/one.json',
         'tests/fixtures/three.json'
-    ) != open('tests/fixtures/result.txt').read()
+    ) == open('tests/fixtures/result.txt').read()

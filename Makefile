@@ -8,7 +8,7 @@ publish:
 	poetry publish --dry-run
 
 test:
-	poetry run pytest
+	poetry run pytest --cov=gendiff
 
 lint:
 	poetry run flake8

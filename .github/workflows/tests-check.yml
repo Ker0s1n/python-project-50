@@ -10,6 +10,8 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Install dependencies
-              run: make install
+              run: |
+                pip install poetry
+                make install
             - name: Check linter
               run: make lint

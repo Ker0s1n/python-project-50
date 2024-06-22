@@ -1,0 +1,13 @@
+{
+  - age: 20
+  + age: 40
+  - dream: became a tik-tok star
+  + dream: second child
+  - family_status: single
+  + family_status: married with any 8 years
+  - hobby: skateboarding
+  + hobby: fishing
+    name: misha
+  - purpose: career
+  + purpose: build house
+}

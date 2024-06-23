@@ -1,8 +1,14 @@
 {
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
+  - age: 30
+  + age: 40
+  + bad_habbits: smocking
+  - dream: false
+  + dream: second child
+  - family_status: in relationship with any
+  + family_status: married with any 8 years
+  - hobby: cooking
+  + hobby: fishing
+    name: misha
+  - purpose: marriage
+  + purpose: build house
 }

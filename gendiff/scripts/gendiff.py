@@ -25,14 +25,19 @@ def generate_diff(file1, file2):
     return '\n'.join(stack).lower()
 
 
-def main():
+def parse_args(arg_list: list[str] | None):
     parser = argparse.ArgumentParser(
         description='Compares two configuration files and shows a difference.')
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('-f', '--format', help='set format of output')
-    args = parser.parse_args()
-    print(generate_diff(args.first_file, args.second_file))
+    return parser.parse_args(arg_list)
+
+
+def main(arg_list: list[str] | None = None):
+    file1 = parse_args(arg_list).first_file
+    file2 = parse_args(arg_list).second_file
+    return generate_diff(file1, file2)
 
 
 if __name__ == '__main__':

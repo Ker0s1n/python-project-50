@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-from gendiff.scripts.gendiff import generate_diff, parse_args
+from gendiff.scripts.file_parser import parse_file, main as parser_main
 
-diff = generate_diff(
-    'tests/fixtures/one.json',
-    'tests/fixtures/three.json'
+diff = parse_file(
+    'tests/fixtures/two.yaml'
 )
 print(diff)
 
 
-print(parse_args(['file1.json', 'file2.json']).first_file)
+parser_main(['tests/fixtures/two.yaml'])

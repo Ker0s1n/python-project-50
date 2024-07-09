@@ -1,6 +1,6 @@
 import pytest
 from gendiff.scripts.gendiff import generate_diff, main
-from gendiff.scripts.file_parser import parse_file, main as parser_main
+from gendiff.scripts.instruments import parse_file
 
 
 @pytest.fixture
@@ -12,9 +12,12 @@ def paths():
         'fourth_file': 'tests/fixtures/one.yaml',
         'fifth_file': 'tests/fixtures/two.yaml',
         'sixth_file': 'tests/fixtures/three.yaml',
+        'seventh_file': 'tests/fixtures/four.yaml',
+        'eighth_file': 'tests/fixtures/five.yaml',
         'first_result': 'tests/fixtures/result_1.txt',
         'second_result': 'tests/fixtures/result.txt',
-        'third_result': 'tests/fixtures/result_main.txt'
+        'third_result': 'tests/fixtures/result_main.txt',
+        'fourth_result': 'tests/fixtures/result_nested.txt',
     }
 
 
@@ -51,14 +54,13 @@ def test_gendiff_merge_yaml(paths):
         paths['sixth_file']
     ) == open(paths['second_result']).read()
 
+    assert generate_diff(
+        paths['seventh_file'],
+        paths['eighth_file']
+    ) == open(paths['fourth_result']).read()
+
 
 def test_exception_type_of_file(paths):
     assert parse_file(
         paths['second_result']
     ) == {'Exception': 'file has wrong format'}
-
-
-def test_file_parser_main(paths):
-    assert parser_main(
-        [paths['first_file']]
-    ) == print(parse_file(paths['first_file']))

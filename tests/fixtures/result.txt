@@ -5,10 +5,10 @@
   - dream: became a tik-tok star
   + dream: second child
   - family_status: single
-  + family_status: married with any 8 years
+  + family_status: married with Any 8 years
   - hobby: skateboarding
   + hobby: fishing
-    name: misha
+    name: Misha
   - purpose: career
   + purpose: build house
 }

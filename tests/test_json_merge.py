@@ -1,6 +1,6 @@
 import pytest
 from gendiff.scripts.gendiff import generate_diff, main
-from gendiff.scripts.instruments import parse_file
+from gendiff.scripts.instruments import parse_file, exception_format
 
 
 @pytest.fixture
@@ -14,10 +14,22 @@ def paths():
         'sixth_file': 'tests/fixtures/three.yaml',
         'seventh_file': 'tests/fixtures/four.yaml',
         'eighth_file': 'tests/fixtures/five.yaml',
+        'ninth_file': 'tests/fixtures/four.json',
+        'tenth_file': 'tests/fixtures/five.json',
         'first_result': 'tests/fixtures/result_1.txt',
         'second_result': 'tests/fixtures/result.txt',
         'third_result': 'tests/fixtures/result_main.txt',
-        'fourth_result': 'tests/fixtures/result_nested.txt',
+        'fourth_result': 'tests/fixtures/result_stylish.txt',
+        'fifth_result': 'tests/fixtures/result_plain.txt',
+        'sixth_result': 'tests/fixtures/result_nonstyle.txt',
+    }
+
+
+@pytest.fixture
+def exceptions():
+    return {
+        'except': ['true', 'false', 'null'],
+        'others': [50, [True], 'text']
     }
 
 
@@ -42,11 +54,17 @@ def test_gendiff_merge_json(paths):
         paths['third_file']
     ) == open(paths['second_result']).read()
 
+    assert generate_diff(
+        paths['ninth_file'],
+        paths['tenth_file'],
+        'plain'
+    ) == open(paths['fifth_result']).read()
+
 
 def test_gendiff_merge_yaml(paths):
     assert generate_diff(
         paths['fourth_file'],
-        paths['fifth_file']
+        paths['fifth_file'],
     ) == open(paths['first_result']).read()
 
     assert generate_diff(
@@ -64,3 +82,11 @@ def test_exception_type_of_file(paths):
     assert parse_file(
         paths['second_result']
     ) == {'Exception': 'file has wrong format'}
+
+
+def test_exception_format(exceptions):
+    for value in exceptions['except']:
+        assert exception_format(value) == value
+    for value in exceptions['others']:
+        assert exception_format(value) == f"'{str(value)}'"
+    assert exception_format('[complex value]') == '[complex value]'

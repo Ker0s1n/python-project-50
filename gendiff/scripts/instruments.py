@@ -34,10 +34,6 @@ def parse_file(path_to_file: str):
     return result
 
 
-def is_key_not_in_node(key, node):
-    return key not in node
-
-
 def make_value_for_key(
         key, value, another_value, node, another_node, function, depth):
     if key not in node:

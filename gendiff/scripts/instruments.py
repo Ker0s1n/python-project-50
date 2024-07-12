@@ -43,7 +43,7 @@ def make_value_for_key(
     if key not in node:
         return {'type': 'added', 'value': another_value}
     elif key not in another_node:
-        return {'type': 'added', 'value': value}
+        return {'type': 'deleted', 'value': value}
     elif is_dict(value) and is_dict(another_value):
         return {
             'type': 'nested',

@@ -15,6 +15,13 @@ def revert_exceptions(value):
         case _: return value
 
 
+def exception_format(value):
+    if value in ['true', 'false', 'null', '[complex value]']:
+        return value
+    else:
+        return f"'{str(value)}'"
+
+
 def parse_file(path_to_file: str):
     if '.yml' in path_to_file or '.yaml' in path_to_file:
         with open(path_to_file) as file_to_parse:
@@ -27,6 +34,29 @@ def parse_file(path_to_file: str):
     return result
 
 
+def is_key_not_in_node(key, node):
+    return key not in node
+
+
+def make_value_for_key(
+        key, value, another_value, node, another_node, function, depth):
+    if key not in node:
+        return {'type': 'added', 'value': another_value}
+    elif key not in another_node:
+        return {'type': 'added', 'value': value}
+    elif is_dict(value) and is_dict(another_value):
+        return {
+            'type': 'nested',
+            'value': function(value, another_value, depth + 1)}
+    else:
+        if value != another_value:
+            return {
+                'type': 'changed',
+                'old_value': value, 'new_value': another_value}
+        else:
+            return {'type': 'unchanged', 'value': value}
+
+
 def make_diff(file1, file2):
     input1 = parse_file(file1)
     input2 = parse_file(file2)
@@ -37,21 +67,7 @@ def make_diff(file1, file2):
             value1 = revert_exceptions(node1.get(key))
             value2 = revert_exceptions(node2.get(key))
 
-            if key not in node1:
-                result[key] = {'type': 'added',
-                               'value': value2}
-            elif key not in node2:
-                result[key] = {'type': 'deleted',
-                               'value': value1}
-            elif is_dict(value1) and is_dict(value2):
-                result[key] = {'type': 'nested',
-                               'value': walk(value1, value2, depth + 1)}
-            else:
-                if value1 != value2:
-                    result[key] = {'type': 'changed',
-                                   'old_value': value1, 'new_value': value2}
-                else:
-                    result[key] = {'type': 'unchanged',
-                                   'value': value1}
+            result[key] = make_value_for_key(
+                key, value1, value2, node1, node2, walk, depth)
         return result
     return walk(input1, input2, 0)

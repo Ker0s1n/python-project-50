@@ -2,12 +2,14 @@
 import argparse
 from gendiff.scripts.instruments import make_diff
 from gendiff.scripts.stylish import stylish
+from gendiff.scripts.plain import plain
 
 
 def generate_diff(file1, file2, format: str = 'stylish'):
     result = make_diff(file1, file2)
     match format:
         case 'stylish': return stylish(result)
+        case 'plain': return plain(result)
         case _: return result
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from gendiff.scripts.instruments import is_dict, exception_format
+from gendiff.scripts.instruments import is_dict, exception_format_plain
 
 
 def make_path(parent, child):
@@ -18,7 +18,7 @@ def get_string(key, val, function):
 with value: [complex value]")
             else:
                 string.append(f'Property \'{key}\' was added \
-with value: {exception_format(function(add))}')
+with value: {exception_format_plain(function(add))}')
         case 'deleted':
             string.append(f'Property \'{key}\' was removed')
         case 'nested': string.append(function(val.get('value'), key))
@@ -26,7 +26,7 @@ with value: {exception_format(function(add))}')
             value1 = function(val.get("old_value"))
             value2 = function(val.get("new_value"))
             string.append(f'Property \'{key}\' was updated. \
-From {exception_format(value1)} to {exception_format(value2)}')
+From {exception_format_plain(value1)} to {exception_format_plain(value2)}')
     return string
 
 
@@ -42,6 +42,6 @@ def plain(value):
             if is_dict(val):
                 result.extend(get_string(key, val, walk))
             else:
-                result.append(exception_format('[complex value]'))
+                result.append(exception_format_plain('[complex value]'))
         return '\n'.join(result)
     return walk(value)

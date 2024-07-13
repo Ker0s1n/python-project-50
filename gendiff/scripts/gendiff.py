@@ -3,6 +3,7 @@ import argparse
 from gendiff.scripts.instruments import make_diff
 from gendiff.scripts.stylish import stylish
 from gendiff.scripts.plain import plain
+from gendiff.scripts.to_json import to_json
 
 
 def generate_diff(file1, file2, format: str = 'stylish'):
@@ -10,6 +11,7 @@ def generate_diff(file1, file2, format: str = 'stylish'):
     match format:
         case 'stylish': return stylish(result)
         case 'plain': return plain(result)
+        case 'json': return to_json(result)
         case _: return result
 
 

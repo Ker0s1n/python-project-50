@@ -7,7 +7,7 @@ build:
 publish:
 	poetry publish --dry-run
 
-test: #--cov-report xml - if you need save results
+test:
 	poetry run pytest --cov=gendiff --cov-report xml
 
 lint:

@@ -1,6 +1,6 @@
 import pytest
 from gendiff.scripts.gendiff import generate_diff, main
-from gendiff.scripts.instruments import parse_file, exception_format
+from gendiff.scripts.instruments import parse_file, exception_format_plain
 
 
 @pytest.fixture
@@ -21,7 +21,8 @@ def paths():
         'third_result': 'tests/fixtures/result_main.txt',
         'fourth_result': 'tests/fixtures/result_stylish.txt',
         'fifth_result': 'tests/fixtures/result_plain.txt',
-        'sixth_result': 'tests/fixtures/result_nonstyle.txt',
+        'sixth_result': 'tests/fixtures/result_json.txt',
+        'seventh_result': 'tests/fixtures/result_nonstyle.txt',
     }
 
 
@@ -74,8 +75,9 @@ def test_gendiff_merge_yaml(paths):
 
     assert generate_diff(
         paths['seventh_file'],
-        paths['eighth_file']
-    ) == open(paths['fourth_result']).read()
+        paths['eighth_file'],
+        'json'
+    ) == open(paths['sixth_result']).read()
 
 
 def test_exception_type_of_file(paths):
@@ -86,7 +88,7 @@ def test_exception_type_of_file(paths):
 
 def test_exception_format(exceptions):
     for value in exceptions['except']:
-        assert exception_format(value) == value
+        assert exception_format_plain(value) == value
     for value in exceptions['others']:
-        assert exception_format(value) == f"'{str(value)}'"
-    assert exception_format('[complex value]') == '[complex value]'
+        assert exception_format_plain(value) == f"'{str(value)}'"
+    assert exception_format_plain('[complex value]') == '[complex value]'

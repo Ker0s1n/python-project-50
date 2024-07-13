@@ -7,7 +7,7 @@ def is_dict(value):
     return type(value) is dict
 
 
-def revert_exceptions(value):
+def exception_format_difference(value):
     match value:
         case None: return 'null'
         case False: return 'false'
@@ -15,11 +15,18 @@ def revert_exceptions(value):
         case _: return value
 
 
-def exception_format(value):
+def exception_format_plain(value):
     if value in ['true', 'false', 'null', '[complex value]']:
         return value
     else:
         return f"'{str(value)}'"
+
+
+def exception_format_json(value):
+    if value in ['true', 'false', 'null']:
+        return value
+    else:
+        return f'"{str(value)}"'
 
 
 def parse_file(path_to_file: str):
@@ -60,8 +67,8 @@ def make_diff(file1, file2):
     def walk(node1, node2, depth: int = 0):
         result = {}
         for key in sorted(node1.keys() | node2.keys()):
-            value1 = revert_exceptions(node1.get(key))
-            value2 = revert_exceptions(node2.get(key))
+            value1 = exception_format_difference(node1.get(key))
+            value2 = exception_format_difference(node2.get(key))
 
             result[key] = make_value_for_key(
                 key, value1, value2, node1, node2, walk, depth)

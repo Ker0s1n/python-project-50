@@ -5,3 +5,9 @@ dist/
 .coverage
 coverage.xml
 .pytest_cache/
+file1.json
+file2.json
+filepath1.yml
+filepath2.yaml
+.cast
+test_module.py

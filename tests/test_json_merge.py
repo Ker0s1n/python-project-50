@@ -29,8 +29,8 @@ def paths():
 @pytest.fixture
 def exceptions():
     return {
-        'except': ['true', 'false', 'null'],
-        'others': [50, [True], 'text']
+        'except': ['true', 'false', 'null', 50],
+        'others': ['50', [True], 'text']
     }
 
 

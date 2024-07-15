@@ -12,7 +12,7 @@ def generate_diff(file1, file2, format: str = 'stylish'):
         case 'stylish': return stylish(result)
         case 'plain': return plain(result)
         case 'json': return to_json(result)
-        case _: return result
+        case _: return stylish(result)
 
 
 def parse_args(arg_list: list[str] | None):

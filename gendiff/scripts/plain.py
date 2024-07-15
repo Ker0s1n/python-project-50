@@ -28,7 +28,7 @@ with value: {exception_format_plain(function(add))}')
             if is_dict(value1):
                 value1 = function(val.get("old_value"))
             if is_dict(value2):
-                value1 = function(val.get("new_value"))
+                value2 = function(val.get("new_value"))
             string.append(f'Property \'{key}\' was updated. \
 From {exception_format_plain(value1)} to {exception_format_plain(value2)}')
     return string

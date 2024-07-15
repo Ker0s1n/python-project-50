@@ -2,13 +2,18 @@
 from gendiff.scripts.instruments import is_dict, exception_format_json
 
 
+def del_last_elem(list_for_string):
+    if list_for_string[-1] == ',':
+        list_for_string.pop()
+
+
 def make_json_value(
         key, val, function, deep_indent_size, deep_indent):
     return f'\n{deep_indent}\"{key}\": \
 {function(val, deep_indent_size)}'
 
 
-def to_json(value, replacer: str = ' ', spaces_count: int = 4):
+def to_json(value, replacer: str = ' ', spaces_count: int = 2):
 
     def walk(node, depth: int = 0):
         if not is_dict(node):
@@ -16,7 +21,6 @@ def to_json(value, replacer: str = ' ', spaces_count: int = 4):
 
         deep_indent_size = depth + spaces_count
         deep_indent = replacer * deep_indent_size
-        current_indent = replacer * depth
 
         result = ['{']
         for key, val in node.items():
@@ -28,8 +32,7 @@ def to_json(value, replacer: str = ' ', spaces_count: int = 4):
                 result.append(f'\n{deep_indent}\"{key}\": \
 {walk(exception_format_json(val), deep_indent_size)}')
                 result.append(',')
-        if result[-1] == ',':
-            result.pop()
-        result.append(f'\n{current_indent}' + '}')
+        del_last_elem(result)
+        result.append(f'\n{replacer*depth}' + '},')
         return ''.join(result)
-    return walk(value)
+    return walk(value)[:-1]

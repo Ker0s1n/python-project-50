@@ -12,7 +12,7 @@
             }
             "setting2": {
                 "type": "deleted",
-                "value": "200"
+                "value": 200
             }
             "setting3": {
                 "type": "changed",
@@ -78,9 +78,9 @@
     "group2": {
         "type": "deleted",
         "value": {
-            "abc": "12345",
+            "abc": 12345,
             "deep": {
-                "id": "45"
+                "id": 45
             }
         }
     }
@@ -89,10 +89,10 @@
         "value": {
             "deep": {
                 "id": {
-                    "number": "45"
+                    "number": 45
                 }
             }
-            "fee": "100500"
+            "fee": 100500
         }
     }
 }

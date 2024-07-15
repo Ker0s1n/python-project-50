@@ -7,6 +7,10 @@ def is_dict(value):
     return type(value) is dict
 
 
+def is_int(value):
+    return type(value) is int
+
+
 def exception_format_difference(value):
     match value:
         case None: return 'null'
@@ -18,7 +22,7 @@ def exception_format_difference(value):
 def exception_format_plain(value):
     if value in ['true', 'false', 'null', '[complex value]']:
         return value
-    elif type(value) is int:
+    elif is_int(value):
         return value
     else:
         return f"'{str(value)}'"
@@ -26,6 +30,8 @@ def exception_format_plain(value):
 
 def exception_format_json(value):
     if value in ['true', 'false', 'null']:
+        return value
+    elif is_int(value):
         return value
     else:
         return f'"{str(value)}"'

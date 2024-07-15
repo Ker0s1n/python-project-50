@@ -23,8 +23,12 @@ with value: {exception_format_plain(function(add))}')
             string.append(f'Property \'{key}\' was removed')
         case 'nested': string.append(function(val.get('value'), key))
         case 'changed':
-            value1 = function(val.get("old_value"))
-            value2 = function(val.get("new_value"))
+            value1 = val.get("old_value")
+            value2 = val.get("new_value")
+            if is_dict(value1):
+                value1 = function(val.get("old_value"))
+            if is_dict(value2):
+                value1 = function(val.get("new_value"))
             string.append(f'Property \'{key}\' was updated. \
 From {exception_format_plain(value1)} to {exception_format_plain(value2)}')
     return string

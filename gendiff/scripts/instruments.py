@@ -18,6 +18,8 @@ def exception_format_difference(value):
 def exception_format_plain(value):
     if value in ['true', 'false', 'null', '[complex value]']:
         return value
+    elif type(value) is int:
+        return value
     else:
         return f"'{str(value)}'"
 

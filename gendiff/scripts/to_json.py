@@ -8,7 +8,7 @@ def make_json_value(
 {function(val, deep_indent_size)}'
 
 
-def to_json(value, replacer: str = ' ', spaces_count: int = 2):
+def to_json(value, replacer: str = ' ', spaces_count: int = 4):
 
     def walk(node, depth: int = 0):
         if not is_dict(node):

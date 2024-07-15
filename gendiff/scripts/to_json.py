@@ -8,14 +8,14 @@ def make_json_value(
 {function(val, deep_indent_size)}'
 
 
-def to_json(value, replacer: str = ' ', spaces_count: int = 4):
+def to_json(value, replacer: str = ' ', spaces_count: int = 2):
 
     def walk(node, depth: int = 0):
         if not is_dict(node):
             return str(node)
 
         deep_indent_size = depth + spaces_count
-        deep_indent = replacer * (deep_indent_size - 2)
+        deep_indent = replacer * deep_indent_size
         current_indent = replacer * depth
 
         result = ['{']
@@ -27,6 +27,9 @@ def to_json(value, replacer: str = ' ', spaces_count: int = 4):
             else:
                 result.append(f'\n{deep_indent}\"{key}\": \
 {walk(exception_format_json(val), deep_indent_size)}')
+                result.append(',')
+        if result[-1] == ',':
+            result.pop()
         result.append(f'\n{current_indent}' + '}')
         return ''.join(result)
     return walk(value)

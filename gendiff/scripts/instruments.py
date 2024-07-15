@@ -55,7 +55,8 @@ def make_value_for_key(
         if value != another_value:
             return {
                 'type': 'changed',
-                'old_value': value, 'new_value': another_value}
+                'old_value': value,
+                'new_value': another_value}
         else:
             return {'type': 'unchanged', 'value': value}
 
@@ -69,7 +70,6 @@ def make_diff(file1, file2):
         for key in sorted(node1.keys() | node2.keys()):
             value1 = exception_format_difference(node1.get(key))
             value2 = exception_format_difference(node2.get(key))
-
             result[key] = make_value_for_key(
                 key, value1, value2, node1, node2, walk, depth)
         return result

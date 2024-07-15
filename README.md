@@ -9,4 +9,4 @@
 ### Codeclimate test coverage:
 [![Test Coverage](https://api.codeclimate.com/v1/badges/3439fd9798dc02cc73f1/test_coverage)](https://codeclimate.com/github/Ker0s1n/python-project-50/test_coverage)
 ### Demo gendiff
-[![asciicast](https://asciinema.org/a/GFxRBjetzbgh85CMCsRShXpHO.svg)](https://asciinema.org/a/GFxRBjetzbgh85CMCsRShXpHO)
+[![asciicast](https://asciinema.org/a/x9xFCv8KVXsNVa4SwY1bELdM3.svg)](https://asciinema.org/a/x9xFCv8KVXsNVa4SwY1bELdM3)

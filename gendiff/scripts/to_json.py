@@ -33,6 +33,6 @@ def to_json(value, replacer: str = ' ', spaces_count: int = 2):
 {walk(exception_format_json(val), deep_indent_size)}')
                 result.append(',')
         del_last_elem(result)
-        result.append(f'\n{replacer*depth}' + '},')
+        result.append(f'\n{replacer * depth}' + '},')
         return ''.join(result)
     return walk(value)[:-1]

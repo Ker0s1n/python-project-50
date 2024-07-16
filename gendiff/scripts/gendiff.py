@@ -32,7 +32,7 @@ def main(arg_list: list[str] | None = None):
     file1 = parse_args(arg_list).first_file
     file2 = parse_args(arg_list).second_file
     format = parse_args(arg_list).format
-    return generate_diff(file1, file2, format)
+    print(generate_diff(file1, file2, format))
 
 
 if __name__ == '__main__':

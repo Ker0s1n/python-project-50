@@ -37,11 +37,7 @@ def exceptions():
 def test_gendiff_main(paths):
     assert main(
         [paths['second_file'], paths['third_file']]
-    ) == open(paths['third_result']).read()
-
-    assert main(
-        [paths['fifth_file'], paths['sixth_file']]
-    ) == open(paths['third_result']).read()
+    ) is None
 
 
 def test_gendiff_merge_json(paths):

@@ -1,6 +1,7 @@
 import pytest
 from gendiff.scripts.gendiff import generate_diff, main
-from gendiff.scripts.instruments import parse_file, exception_format_plain
+from gendiff.tools.file_parser import parse_file
+from gendiff.tools.exceptions import exception_format_plain
 
 
 @pytest.fixture

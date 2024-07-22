@@ -1,6 +1,6 @@
 import pytest
 from gendiff.scripts.gendiff import generate_diff
-from gendiff.scripts.gendiff import parse_file
+from gendiff.file_parser import parse_file
 from gendiff.formatters.plain import exception_format_plain
 
 

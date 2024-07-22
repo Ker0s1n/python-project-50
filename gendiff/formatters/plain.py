@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-from gendiff.tools.exceptions import exception_format_plain
+def exception_format_plain(value):
+    if isinstance(value, bool):
+        return str(value).lower()
+    elif value is None:
+        return 'null'
+    elif value == '[complex value]':
+        return value
+    elif type(value) is int:
+        return value
+    else:
+        return f"'{str(value)}'"
 
 
 def make_value_for_plain(key, val, function):

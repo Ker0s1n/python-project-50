@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+def exception_format_stylish(value):
+    if isinstance(value, bool):
+        return str(value).lower()
+    elif value is None:
+        return 'null'
+    elif type(value) is int:
+        return value
+    else:
+        return str(value)
+
+
 def make_value_for_stylish(
         key, val, function, deep_indent_size, deep_indent):
     string = []
@@ -36,7 +47,7 @@ def make_value_for_stylish(
 
 def stylish(node, depth: int = 0, replacer: str = ' ', spaces_count: int = 4):
     if not isinstance(node, dict):
-        return str(node)
+        return exception_format_stylish(node)
 
     deep_indent_size = depth + spaces_count
     deep_indent = replacer * (deep_indent_size - 2)

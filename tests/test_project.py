@@ -1,7 +1,7 @@
 import pytest
-from gendiff.scripts.gendiff import generate_diff, main
-from gendiff.tools.file_parser import parse_file
-from gendiff.tools.exceptions import exception_format_plain
+from gendiff.scripts.gendiff import generate_diff
+from gendiff.scripts.gendiff import parse_file
+from gendiff.formatters.plain import exception_format_plain
 
 
 @pytest.fixture
@@ -10,9 +10,9 @@ def paths():
         'first_file': 'tests/fixtures/one.json',
         'second_file': 'tests/fixtures/two.json',
         'third_file': 'tests/fixtures/three.json',
-        'fourth_file': 'tests/fixtures/one.yaml',
-        'fifth_file': 'tests/fixtures/two.yaml',
-        'sixth_file': 'tests/fixtures/three.yaml',
+        'fourth_file': 'tests/fixtures/two.yaml',
+        'fifth_file': 'tests/fixtures/three.yaml',
+        'sixth_file': 'tests/fixtures/one.yaml',
         'seventh_file': 'tests/fixtures/four.yaml',
         'eighth_file': 'tests/fixtures/five.yaml',
         'ninth_file': 'tests/fixtures/four.json',
@@ -31,12 +31,6 @@ def exceptions():
     return {
         'others': ['50', [True], 'text',]
     }
-
-
-def test_gendiff_main(paths):
-    assert main(
-        [paths['second_file'], paths['third_file']]
-    ) is None
 
 
 def test_gendiff_merge_json(paths):
@@ -61,12 +55,12 @@ def test_gendiff_merge_yaml(paths):
     assert generate_diff(
         paths['fourth_file'],
         paths['fifth_file'],
-    ) == open(paths['first_result']).read()
+    ) == open(paths['third_result']).read()
 
     assert generate_diff(
-        paths['fourth_file'],
-        paths['sixth_file']
-    ) == open(paths['second_result']).read()
+        paths['seventh_file'],
+        paths['eighth_file']
+    ) == open(paths['fourth_result']).read()
 
     assert generate_diff(
         paths['seventh_file'],

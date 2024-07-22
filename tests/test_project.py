@@ -23,15 +23,13 @@ def paths():
         'fourth_result': 'tests/fixtures/result_stylish.txt',
         'fifth_result': 'tests/fixtures/result_plain.txt',
         'sixth_result': 'tests/fixtures/result_json.txt',
-        'seventh_result': 'tests/fixtures/result_nonstyle.txt',
     }
 
 
 @pytest.fixture
 def exceptions():
     return {
-        'except': ['true', 'false', 'null', 50],
-        'others': ['50', [True], 'text']
+        'others': ['50', [True], 'text',]
     }
 
 
@@ -84,8 +82,10 @@ def test_exception_type_of_file(paths):
 
 
 def test_exception_format(exceptions):
-    for value in exceptions['except']:
-        assert exception_format_plain(value) == value
     for value in exceptions['others']:
         assert exception_format_plain(value) == f"'{str(value)}'"
+    assert exception_format_plain(True) == 'true'
+    assert exception_format_plain(False) == 'false'
+    assert exception_format_plain(None) == 'null'
+    assert exception_format_plain(50) == 50
     assert exception_format_plain('[complex value]') == '[complex value]'

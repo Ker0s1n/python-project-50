@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import argparse
 from gendiff.tools.difference_maker import make_diff
-from gendiff.formatters.stylish_formatter import stylish
-from gendiff.formatters.plain_formatter import plain
-from gendiff.formatters.json_formatter import json
+from gendiff.formatters.stylish import stylish
+from gendiff.formatters.plain import plain
+from gendiff.formatters.json import json
 
 
 def generate_diff(file1, file2, format: str = 'stylish'):

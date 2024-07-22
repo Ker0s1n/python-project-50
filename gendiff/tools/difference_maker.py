@@ -1,14 +1,32 @@
 #!/usr/bin/env python3
 from gendiff.tools.file_parser import parse_file
-from gendiff.tools.exceptions import exception_format_difference
-from gendiff.tools.value_maker import make_value_for_difference
+
+
+def make_value_for_difference(
+        key, value, another_value, node, another_node, function, depth):
+    if key not in node:
+        return {'type': 'added', 'value': another_value}
+    elif key not in another_node:
+        return {'type': 'deleted', 'value': value}
+    elif isinstance(value, dict) and isinstance(another_value, dict):
+        return {
+            'type': 'nested',
+            'value': function(value, another_value, depth + 1)}
+    else:
+        if value != another_value:
+            return {
+                'type': 'changed',
+                'old_value': value,
+                'new_value': another_value}
+        else:
+            return {'type': 'unchanged', 'value': value}
 
 
 def difference(node1, node2, depth: int = 0):
     result = {}
     for key in sorted(node1.keys() | node2.keys()):
-        value1 = exception_format_difference(node1.get(key))
-        value2 = exception_format_difference(node2.get(key))
+        value1 = node1.get(key)
+        value2 = node2.get(key)
         result[key] = make_value_for_difference(
             key, value1, value2, node1, node2, difference, depth)
     return result

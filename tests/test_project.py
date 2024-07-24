@@ -1,82 +1,65 @@
 import pytest
-from gendiff.scripts.gendiff import generate_diff
+from gendiff.generate_difference import generate_diff
 from gendiff.file_parser import parse_file
 from gendiff.formatters.plain import exception_format_plain
 
 
-@pytest.fixture
-def paths():
-    return {
-        'first_file': 'tests/fixtures/one.json',
-        'second_file': 'tests/fixtures/two.json',
-        'third_file': 'tests/fixtures/three.json',
-        'fourth_file': 'tests/fixtures/two.yaml',
-        'fifth_file': 'tests/fixtures/three.yaml',
-        'sixth_file': 'tests/fixtures/one.yaml',
-        'seventh_file': 'tests/fixtures/four.yaml',
-        'eighth_file': 'tests/fixtures/five.yaml',
-        'ninth_file': 'tests/fixtures/four.json',
-        'tenth_file': 'tests/fixtures/five.json',
-        'first_result': 'tests/fixtures/result_1.txt',
-        'second_result': 'tests/fixtures/result.txt',
-        'third_result': 'tests/fixtures/result_main.txt',
-        'fourth_result': 'tests/fixtures/result_stylish.txt',
-        'fifth_result': 'tests/fixtures/result_plain.txt',
-        'sixth_result': 'tests/fixtures/result_json.txt',
-    }
-
-
-@pytest.fixture
-def exceptions():
-    return {
-        'others': ['50', [True], 'text',]
-    }
-
-
-def test_gendiff_merge_json(paths):
+@pytest.mark.parametrize(
+    "path_to_first_file, path_to_second_file, format, result",
+    [
+        ('tests/fixtures/misha_profile_20_years_old.json',
+         'tests/fixtures/misha_profile_30_years_old.json',
+         'stylish',
+         'tests/fixtures/20_30_yo_misha_profile_comparison.txt'
+         ),
+        ('tests/fixtures/misha_profile_20_years_old.json',
+         'tests/fixtures/misha_profile_40_years_old.json',
+         'stylish',
+         'tests/fixtures/20_40_yo_misha_profile_comparison.txt'
+         ),
+        ('tests/fixtures/data_for_test_before.json',
+         'tests/fixtures/data_for_test_after.json',
+         'plain',
+         'tests/fixtures/plain_difference_for_test_data.txt'
+         ),
+        ('tests/fixtures/misha_profile_30_years_old.yaml',
+         'tests/fixtures/misha_profile_40_years_old.yaml',
+         'jhkhkkjkj',
+         'tests/fixtures/30_40_yo_misha_profile_comparison.txt'
+         ),
+        ('tests/fixtures/data_for_test_before.yaml',
+         'tests/fixtures/data_for_test_after.yaml',
+         'stylish',
+         'tests/fixtures/stylish_difference_for_test_data.txt'
+         ),
+        ('tests/fixtures/data_for_test_before.json',
+         'tests/fixtures/data_for_test_after.json',
+         'json',
+         'tests/fixtures/json_difference_for_test_data.txt'
+         ),
+    ]
+)
+def test_diff_and_format(
+    path_to_first_file,
+    path_to_second_file,
+    format,
+    result
+):
     assert generate_diff(
-        paths['first_file'],
-        paths['second_file']
-    ) == open(paths['first_result']).read()
-
-    assert generate_diff(
-        paths['first_file'],
-        paths['third_file']
-    ) == open(paths['second_result']).read()
-
-    assert generate_diff(
-        paths['ninth_file'],
-        paths['tenth_file'],
-        'plain'
-    ) == open(paths['fifth_result']).read()
+        path_to_first_file,
+        path_to_second_file,
+        format
+    ) == open(result).read()
 
 
-def test_gendiff_merge_yaml(paths):
-    assert generate_diff(
-        paths['fourth_file'],
-        paths['fifth_file'],
-    ) == open(paths['third_result']).read()
-
-    assert generate_diff(
-        paths['seventh_file'],
-        paths['eighth_file']
-    ) == open(paths['fourth_result']).read()
-
-    assert generate_diff(
-        paths['seventh_file'],
-        paths['eighth_file'],
-        'json'
-    ) == open(paths['sixth_result']).read()
-
-
-def test_exception_type_of_file(paths):
+def test_exception_type_of_file():
     assert parse_file(
-        paths['second_result']
+        'tests/fixtures/json_difference_for_test_data.txt'
     ) == {'Exception': 'file has wrong format'}
 
 
-def test_exception_format(exceptions):
-    for value in exceptions['others']:
+def test_exception_format():
+    for value in ['50', [True], 'text',]:
         assert exception_format_plain(value) == f"'{str(value)}'"
     assert exception_format_plain(True) == 'true'
     assert exception_format_plain(False) == 'false'

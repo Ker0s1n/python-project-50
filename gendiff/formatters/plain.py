@@ -1,5 +1,7 @@
-#!/usr/bin/env python3
 def exception_format_plain(value):
+    """
+    Returns a variable after handling an exception.
+    """
     if isinstance(value, bool):
         return str(value).lower()
     elif value is None:
@@ -13,16 +15,24 @@ def exception_format_plain(value):
 
 
 def make_value_for_plain(key, val, function):
+    """
+    Returns data characterizing the passed key
+    and the variable it contains as a string.
+    """
     string = []
     match val.get('type'):
         case 'added':
             add = val.get('value')
             if isinstance(add, dict):
-                string.append(f"Property \'{key}\' was added \
-with value: [complex value]")
+                string.append(
+                    f"Property \'{key}\' was added "
+                    f"with value: [complex value]"
+                )
             else:
-                string.append(f'Property \'{key}\' was added \
-with value: {exception_format_plain(add)}')
+                string.append(
+                    f'Property \'{key}\' was added '
+                    f'with value: {exception_format_plain(add)}'
+                )
         case 'deleted':
             string.append(f'Property \'{key}\' was removed')
         case 'nested': string.append(function(val.get('value'), key))
@@ -33,18 +43,29 @@ with value: {exception_format_plain(add)}')
                 value1 = function(val.get('old_value'))
             if isinstance(value2, dict):
                 value2 = function(val.get('new_value'))
-            string.append(f'Property \'{key}\' was updated. \
-From {exception_format_plain(value1)} to {exception_format_plain(value2)}')
+            string.append(
+                f'Property \'{key}\' was updated. '
+                f'From {exception_format_plain(value1)} to '
+                f'{exception_format_plain(value2)}'
+            )
     return string
 
 
 def make_path(parent, child):
+    """
+    Returns a string containing the path to the specified dictionary key,
+    considering its parents.
+    """
     if parent:
         return f'{parent}.{child}'
     return child
 
 
 def plain(node, parent_key: str = ''):
+    """
+    Returns data about the dictionary of changes
+    in the form of a textual description.
+    """
     if not isinstance(node, dict):
         return str(node)
 

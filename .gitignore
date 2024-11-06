@@ -11,3 +11,4 @@ filepath1.yml
 filepath2.yaml
 *.cast
 test_module.py
+.python-version
